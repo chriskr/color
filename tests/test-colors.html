@@ -1,0 +1,94 @@
+<!doctype html>
+<title>test</title>
+<style>
+
+body {
+  background-color: hsl(0, 0%, 85%);
+}
+
+span {
+  display: inline-block;
+  min-width: 160px;
+  margin: 5px;
+  padding: 8px;
+  font: menu;
+}
+
+[style*=background-color] {
+  min-width: 120px;
+  border: 1px solid hsl(0, 0%, 50%);
+}
+
+</style>
+<script src=../src/color.js></script>
+<script src=../src/rgbinterface.js></script>
+<script src=../src/hsvinterface.js></script>
+<script src=../src/hslinterface.js></script>
+<script src=../src/hexinterface.js></script>
+<script>
+
+window.onload = function() {
+  var appendSample = function(cssColor, isDark) {
+    var span = document.createElement('span');
+    span.style.backgroundColor = cssColor;
+    if (isDark) {
+      span.style. color = "white";
+    }
+    span.textContent = cssColor;
+    document.body.appendChild(span);
+  }
+
+  var appendText = function(text) {
+    var span = document.createElement('span');
+    span.textContent = text;
+    document.body.appendChild(span);
+  }
+
+  var formatHslOrHsvArray = function(array) {
+    return array.map(function(value, index) {
+      switch (index) {
+        case 0:
+          return value;
+        case 1:
+        case 2:
+          return value.toFixed(2);
+      }
+    }).join(', ');
+  }
+
+  var appendSamples = function(color) {
+    var isDark = color.getLuminance() < 0.35;
+    appendSample(color.rgb.toCss(), isDark);
+    appendSample(color.hsl.toCss(), isDark);
+    appendSample(color.hex.toCss(), isDark);
+    var contrast = color.getContrastRatio(isDark ? white : black);
+    appendText('getting hsv ' + formatHslOrHsvArray(c.hsv.get()));
+  }
+
+  var c = new Color()
+  var white = new Color("white");
+  var black = new Color("black");
+
+  for (var i = 0; i <= 10; i++) {
+    for (var j = 0; j <= 10; j++) {
+      for (var k = 0; k < 6; k++) {
+        document.body.appendChild(document.createElement('hr'));
+        var hsv = [60 * k, i * 0.1, j * 0.1];
+        c.hsv.set(hsv);
+        var rgb = c.rgb.get();
+        var hsl = c.hsl.get();
+        appendText('setting hsv ' + formatHslOrHsvArray(hsv));
+        appendSamples(c);
+        document.body.appendChild(document.createElement('div'));
+        appendText('setting rgb ' + rgb.join(', '));
+        c.rgb.set(rgb);
+        appendSamples(c);
+        document.body.appendChild(document.createElement('div'));
+        appendText('setting hsl ' + formatHslOrHsvArray(hsl))
+        c.hsl.set(hsl);
+        appendSamples(c);
+      }
+    }
+  }
+}
+</script>

@@ -1,7 +1,5 @@
 # Color library
 
-
-
 Console examples:
 ````javascript
 > var color = new Color('lime')
