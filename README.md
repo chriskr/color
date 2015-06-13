@@ -18,6 +18,6 @@ Console examples:
 < "rgb(255, 255, 0)"
 ````
 
-[Example color picker](https://chriskr.github.io/color/examples/color-picker.html)
-[Tests](https://chriskr.github.io/color/tests/test-colors.html)
++ [Example color picker](https://chriskr.github.io/color/examples/color-picker.html)
++ [Tests](https://chriskr.github.io/color/tests/test-colors.html)
 
