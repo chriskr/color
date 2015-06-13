@@ -19,4 +19,5 @@ Console examples:
 ````
 
 [Example color picker](https://chriskr.github.io/color/examples/color-picker.html)
+[Tests](https://chriskr.github.io/color/tests/test-colors.html)
 
