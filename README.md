@@ -3,10 +3,9 @@
 Color library
 
 ````javascript
-var color = new Color('lime')
-undefined
-color.rgb.toCss()
-"rgb(0, 255, 0)"
+> var color = new Color('lime')
+> color.rgb.toCss()
+< "rgb(0, 255, 0)"
 color.hsl.toCss()
 "hsl(120, 100%, 50%)"
 color.hsv.toCss()
