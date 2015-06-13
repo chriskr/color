@@ -1,0 +1,11 @@
+<svg viewBox='0 0 100 100'
+     xmlns='http://www.w3.org/2000/svg'
+     xmlns:xlink='http://www.w3.org/1999/xlink'>
+  <defs>
+    <linearGradient id='black-transparent' x1='0' x2='0' y1='1' y2='0'>
+      <stop offset='0'  stop-color='black'/>
+      <stop offset='100' stop-color='transparent'/>
+    </linearGradient>
+  </defs>
+  <rect fill='url(#black-transparent)' x='0' y='0' width='100' height='100'/>
+</svg>
