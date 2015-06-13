@@ -20,4 +20,5 @@ Console examples:
 < "rgb(255, 255, 0)"
 ````
 
-https://chriskr.github.io/color/examples/color-picker.html
+[Example color picker](https://chriskr.github.io/color/examples/color-picker.html)
+
