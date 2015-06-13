@@ -1,8 +1,8 @@
-# color
+# Color library
 
-Color library
 
-Console example
+
+Console examples:
 ````javascript
 > var color = new Color('lime')
 > color.rgb.toCss()
