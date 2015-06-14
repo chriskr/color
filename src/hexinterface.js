@@ -42,6 +42,14 @@ class HexInterface {
   }
 
   toCss() {
-    return '#' + this.get();
+    let hex = this.get();
+    let isShort = true;
+    for (var i = 0; (i < 6) && isShort; i += 2) {
+      isShort = hex[i] === hex[i + 1];
+    }
+    if (isShort) {
+      hex = hex[0] + hex[2] + hex[4];
+    }
+    return '#' + hex;
   }
 }

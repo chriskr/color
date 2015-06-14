@@ -10,7 +10,7 @@ Console examples:
 > color.hsv.toCss()
 < "hsl(120, 100%, 50%)"
 > color.hex.toCss()
-< "#00ff00"
+< "#0f0"
 
 > color.rgb.r = 255
 < 255
