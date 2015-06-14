@@ -315,11 +315,12 @@ class Color {
       span.style.display = 'none';
       document.body.appendChild(span);
     }
-    span.style.removeProperty('color');
+    span.style.setProperty('color', Color.DEFAULT_COLOR, 'important');
     return span;
   }
 }
 
+Color.DEFAULT_COLOR = 'black';
 Color.KEYWORD = 1;
 Color.HEX = 2;
 Color.RGB = 3;
