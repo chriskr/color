@@ -10,12 +10,12 @@ window.onload = function() {
   var hueInput = document.querySelector('#hue');
   var satValueContainer = document.querySelector('#s-v-container');
   var sampleText = document.querySelector('pre');
+  var satValueStyle = document.querySelector('#s-v').style;
   var sheets = document.styleSheets;
-  var satValueStyle = sheets.getDeclaration('#s-v');
   var hueThumbStyle = sheets.getDeclaration('#hue::-webkit-slider-thumb') ||
       sheets.getDeclaration('#hue::-moz-range-thumb');
-  var satValueThumbStyle = sheets.getDeclaration('#s-v-thumb');
-  var sampleColorStyle = sheets.getDeclaration('#color-sample');
+  var satValueThumbStyle = document.querySelector('#s-v-thumb').style;
+  var sampleColorStyle = document.querySelector('#color-sample').style;
   var box = null;
 
   var updateHue = function() {
@@ -32,7 +32,9 @@ window.onload = function() {
   }
 
   var updateThumbs = function() {
-    hueThumbStyle.backgroundColor = 'hsl(' + hsl.h + ', 100%, 50%)';
+    if (hueThumbStyle) {
+      hueThumbStyle.backgroundColor = 'hsl(' + hsl.h + ', 100%, 50%)';
+    }
     satValueThumbStyle.backgroundColor = hex.toCss();
     updateSampleColor();
   }
@@ -78,16 +80,20 @@ window.onload = function() {
 
   document.addEventListener('keydown', function(event) {
     if (document.activeElement === satValueContainer) {
-      switch (event.keyIdentifier) {
+      switch (event.key) {
+        case 'ArrowRight':
         case 'Right':
           hsv.s += DELTA;
           break;
+        case 'ArrowLeft':
         case 'Left':
           hsv.s -= DELTA;
           break;
+        case 'ArrowUp':
         case 'Up':
           hsv.v += DELTA;
           break;
+        case 'ArrowDown':
         case 'Down':
           hsv.v -= DELTA;
           break;
