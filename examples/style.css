@@ -183,3 +183,16 @@ h1 + #s-v-container + #hue + #sample-container::before {
   opacity: 0.5;
   top: 157px;
 }
+
+#repo-link {
+  bottom: 25px;
+  color: inherit;
+  right: 25px;
+  position: fixed;
+  text-decoration: none;
+  white-space: pre;
+}
+
+#repo-link:hover {
+  text-decoration: underline;
+}
