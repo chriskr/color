@@ -176,7 +176,7 @@ class Color {
   }
 
   setValue(value) {
-    this.value = Color.clamp(value, 0, 100);
+    this.value = Color.clamp(value, 0, 1);
     this.updateHslFromHsv();
     this.updateRgbFromHsl();
   }

@@ -1,6 +1,6 @@
 'use strict';
 
-var setupColorPicker = function() {
+var setupColorPicker = function setupColorPicker() {
   var DELTA = 0.01;
   var color = new Color('#521a96');
   var rgb = color.rgb;
@@ -12,70 +12,59 @@ var setupColorPicker = function() {
   var sampleText = document.querySelector('pre');
   var satValueStyle = document.querySelector('#s-v').style;
   var sheets = document.styleSheets;
-  var hueThumbStyle = sheets.getDeclaration(
-      '#hue::-webkit-slider-thumb', '#hue::-moz-range-thumb',
-      '#hue::-ms-thumb');
+  var hueThumbStyle = sheets.getDeclaration('#hue::-webkit-slider-thumb', '#hue::-moz-range-thumb', '#hue::-ms-thumb');
   var satValueThumbStyle = document.querySelector('#s-v-thumb').style;
   var sampleColorStyle = document.querySelector('#color-sample').style;
   var box = null;
 
-  var updateHue = function() {
+  var updateHue = function updateHue() {
     var color = 'hsl(' + hsv.h + ', 100%, 50%)';
     var backgroundImage = 'linear-gradient(90deg, white, ' + color + ')';
     satValueStyle.backgroundImage = backgroundImage;
     updateThumbs();
-  }
+  };
 
-  var updateSaturationAndValue = function() {
+  var updateSaturationAndValue = function updateSaturationAndValue() {
     satValueThumbStyle.left = Color.toPercent(hsv.s);
     satValueThumbStyle.top = Color.toPercent(1 - hsv.v);
     updateThumbs();
-  }
+  };
 
-  var updateThumbs = function() {
+  var updateThumbs = function updateThumbs() {
     if (hueThumbStyle) {
       hueThumbStyle.backgroundColor = 'hsl(' + hsl.h + ', 100%, 50%)';
     }
     satValueThumbStyle.backgroundColor = hex.toCss();
     updateSampleColor();
-  }
+  };
 
-  var updateSampleColor = function() {
+  var updateSampleColor = function updateSampleColor() {
     sampleColorStyle.backgroundColor = hex.toCss();
-    sampleText.textContent = [
-      'Hue: ' + hsv.h,
-      'Satuartion: '+ Color.toPercent(hsv.s),
-      'Value: '+ Color.toPercent(hsv.v),
-      '',
-      'CSS values:',
-      hex.toCss(),
-      rgb.toCss(),
-      hsl.toCss(),
-    ].join('\n');
-  }
+    sampleText.textContent = ['Hue: ' + hsv.h, 'Satuartion: ' + Color.toPercent(hsv.s), 'Value: ' + Color.toPercent(hsv.v), '', 'CSS values:', hex.toCss(), rgb.toCss(), hsl.toCss()].join('\n');
+  };
 
-  var onmousemove = function(event) {
+  var onmousemove = function onmousemove(event) {
     hsv.s = (event.clientX - box.left) / box.width;
-    hsv.v = 1 - ((event.clientY - box.top) / box.height);
+    hsv.v = 1 - (event.clientY - box.top) / box.height;
     updateSaturationAndValue();
-  }
+  };
 
-  var onmouseup = function(event) {
+  var onmouseup = function onmouseup(event) {
     document.removeEventListener('mousemove', onmousemove);
     document.removeEventListener('mouseup', onmouseup);
-  }
+  };
 
-  hueInput.addEventListener('input', function() {
+  hueInput.addEventListener('input', function () {
     hsv.h = this.value;
     updateHue();
   });
 
-  hueInput.addEventListener('change', function() {
+  hueInput.addEventListener('change', function () {
     hsv.h = this.value;
     updateHue();
   });
 
-  satValueContainer.addEventListener('mousedown', function(event) {
+  satValueContainer.addEventListener('mousedown', function (event) {
     box = satValueContainer.getBoundingClientRect();
     onmousemove(event);
     document.addEventListener('mousemove', onmousemove);
@@ -84,7 +73,7 @@ var setupColorPicker = function() {
     satValueContainer.focus();
   });
 
-  document.addEventListener('keydown', function(event) {
+  document.addEventListener('keydown', function (event) {
     if (document.activeElement === satValueContainer) {
       switch (event.key) {
         case 'ArrowRight':
@@ -108,7 +97,7 @@ var setupColorPicker = function() {
     }
   });
 
-  document.addEventListener('dragstart', function(event) {
+  document.addEventListener('dragstart', function (event) {
     event.preventDefault();
   });
 
@@ -117,7 +106,7 @@ var setupColorPicker = function() {
   updateSaturationAndValue();
 };
 
-window.onload = function() {
+window.onload = function () {
   try {
     setupColorPicker();
   } catch (e) {
