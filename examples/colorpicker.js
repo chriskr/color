@@ -24,13 +24,13 @@ var setupColorPicker = function() {
     var backgroundImage = 'linear-gradient(90deg, white, ' + color + ')';
     satValueStyle.backgroundImage = backgroundImage;
     updateThumbs();
-  }
+  };
 
   var updateSaturationAndValue = function() {
     satValueThumbStyle.left = Color.toPercent(hsv.s);
     satValueThumbStyle.top = Color.toPercent(1 - hsv.v);
     updateThumbs();
-  }
+  };
 
   var updateThumbs = function() {
     if (hueThumbStyle) {
@@ -38,7 +38,7 @@ var setupColorPicker = function() {
     }
     satValueThumbStyle.backgroundColor = hex.toCss();
     updateSampleColor();
-  }
+  };
 
   var updateSampleColor = function() {
     sampleColorStyle.backgroundColor = hex.toCss();
@@ -52,18 +52,24 @@ var setupColorPicker = function() {
       rgb.toCss(),
       hsl.toCss(),
     ].join('\n');
-  }
+  };
 
-  var onmousemove = function(event) {
-    hsv.s = (event.clientX - box.left) / box.width;
-    hsv.v = 1 - ((event.clientY - box.top) / box.height);
+  var moveInput = function(event) {
+    var eventBox = event;
+    if (event.touches !== undefined) {
+      eventBox = event.touches[0];
+    }
+    hsv.s = (eventBox.clientX - box.left) / box.width;
+    hsv.v = 1 - ((eventBox.clientY - box.top) / box.height);
     updateSaturationAndValue();
-  }
+  };
 
-  var onmouseup = function(event) {
-    document.removeEventListener('mousemove', onmousemove);
-    document.removeEventListener('mouseup', onmouseup);
-  }
+  var endInput = function(event) {
+    document.removeEventListener('touchmove', moveInput);
+    document.removeEventListener('touchend', endInput);
+    document.removeEventListener('mousemove', moveInput);
+    document.removeEventListener('mouseup', endInput);
+  };
 
   hueInput.addEventListener('input', function() {
     hsv.h = this.value;
@@ -75,14 +81,26 @@ var setupColorPicker = function() {
     updateHue();
   });
 
-  satValueContainer.addEventListener('mousedown', function(event) {
+  var inputStart = function(event) {
+    var moveType = 'mousemove';
+    var endType = 'mouseup';
+    if (event.type === 'touchstart') {
+      if (event.touches.length > 1) {
+        return;
+      }
+      moveType = 'touchmove';
+      endType = 'touchend';
+    }
     box = satValueContainer.getBoundingClientRect();
-    onmousemove(event);
-    document.addEventListener('mousemove', onmousemove);
-    document.addEventListener('mouseup', onmouseup);
+    moveInput(event);
+    document.addEventListener(moveType, moveInput);
+    document.addEventListener(endType, endInput);
     event.preventDefault();
     satValueContainer.focus();
-  });
+  };
+
+  satValueContainer.addEventListener('mousedown', inputStart);
+  satValueContainer.addEventListener('touchstart', inputStart);
 
   document.addEventListener('keydown', function(event) {
     if (document.activeElement === satValueContainer) {

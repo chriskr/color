@@ -43,15 +43,21 @@ var setupColorPicker = function setupColorPicker() {
     sampleText.textContent = ['Hue: ' + hsv.h, 'Satuartion: ' + Color.toPercent(hsv.s), 'Value: ' + Color.toPercent(hsv.v), '', 'CSS values:', hex.toCss(), rgb.toCss(), hsl.toCss()].join('\n');
   };
 
-  var onmousemove = function onmousemove(event) {
-    hsv.s = (event.clientX - box.left) / box.width;
-    hsv.v = 1 - (event.clientY - box.top) / box.height;
+  var moveInput = function moveInput(event) {
+    var eventBox = event;
+    if (event.touches !== undefined) {
+      eventBox = event.touches[0];
+    }
+    hsv.s = (eventBox.clientX - box.left) / box.width;
+    hsv.v = 1 - (eventBox.clientY - box.top) / box.height;
     updateSaturationAndValue();
   };
 
-  var onmouseup = function onmouseup(event) {
-    document.removeEventListener('mousemove', onmousemove);
-    document.removeEventListener('mouseup', onmouseup);
+  var endInput = function endInput(event) {
+    document.removeEventListener('touchmove', moveInput);
+    document.removeEventListener('touchend', endInput);
+    document.removeEventListener('mousemove', moveInput);
+    document.removeEventListener('mouseup', endInput);
   };
 
   hueInput.addEventListener('input', function () {
@@ -64,14 +70,26 @@ var setupColorPicker = function setupColorPicker() {
     updateHue();
   });
 
-  satValueContainer.addEventListener('mousedown', function (event) {
+  var inputStart = function inputStart(event) {
+    var moveType = 'mousemove';
+    var endType = 'mouseup';
+    if (event.type === 'touchstart') {
+      if (event.touches.length > 1) {
+        return;
+      }
+      moveType = 'touchmove';
+      endType = 'touchend';
+    }
     box = satValueContainer.getBoundingClientRect();
-    onmousemove(event);
-    document.addEventListener('mousemove', onmousemove);
-    document.addEventListener('mouseup', onmouseup);
+    moveInput(event);
+    document.addEventListener(moveType, moveInput);
+    document.addEventListener(endType, endInput);
     event.preventDefault();
     satValueContainer.focus();
-  });
+  };
+
+  satValueContainer.addEventListener('mousedown', inputStart);
+  satValueContainer.addEventListener('touchstart', inputStart);
 
   document.addEventListener('keydown', function (event) {
     if (document.activeElement === satValueContainer) {
