@@ -13,8 +13,10 @@ var setupColorPicker = function() {
   var satValueStyle = document.querySelector('#s-v').style;
   var sheets = document.styleSheets;
   var hueThumbStyle = sheets.getDeclaration(
-      '#hue::-webkit-slider-thumb', '#hue::-moz-range-thumb',
-      '#hue::-ms-thumb');
+    '#hue::-moz-range-thumb',
+    '#hue::-webkit-slider-thumb',
+    '#hue::-ms-thumb'
+  );
   var satValueThumbStyle = document.querySelector('#s-v-thumb').style;
   var sampleColorStyle = document.querySelector('#color-sample').style;
   var box = null;
@@ -44,13 +46,13 @@ var setupColorPicker = function() {
     sampleColorStyle.backgroundColor = hex.toCss();
     sampleText.textContent = [
       'Hue: ' + hsv.h,
-      'Satuartion: '+ Color.toPercent(hsv.s),
-      'Value: '+ Color.toPercent(hsv.v),
+      'Satuartion: ' + Color.toPercent(hsv.s),
+      'Value: ' + Color.toPercent(hsv.v),
       '',
       'CSS values:',
       hex.toCss(),
       rgb.toCss(),
-      hsl.toCss(),
+      hsl.toCss()
     ].join('\n');
   };
 
@@ -60,7 +62,7 @@ var setupColorPicker = function() {
       eventBox = event.touches[0];
     }
     hsv.s = (eventBox.clientX - box.left) / box.width;
-    hsv.v = 1 - ((eventBox.clientY - box.top) / box.height);
+    hsv.v = 1 - (eventBox.clientY - box.top) / box.height;
     updateSaturationAndValue();
   };
 

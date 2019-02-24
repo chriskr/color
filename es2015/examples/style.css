@@ -46,7 +46,6 @@ h2 {
   position: absolute;
   top: 0;
   width: 100%;
-
 }
 
 #s-v::after {
@@ -72,13 +71,16 @@ h2 {
 
 #hue {
   background-color: transparent;
-  background-image: linear-gradient(90deg, #f00,
-                                           #ff0,
-                                           #0f0,
-                                           #0ff,
-                                           #00f,
-                                           #f0f,
-                                           #f00);
+  background-image: linear-gradient(
+    90deg,
+    #f00,
+    #ff0,
+    #0f0,
+    #0ff,
+    #00f,
+    #f0f,
+    #f00
+  );
   background-position: 33px 18px;
   background-repeat: no-repeat;
   background-size: 480px 30px;
@@ -93,7 +95,7 @@ h2 {
 #hue::-webkit-slider-thumb {
   background: transparent;
   border-radius: 33px;
-  border: 3px solid hsla(0, 0%, 100%, .5);
+  border: 3px solid hsla(0, 0%, 100%, 0.5);
   height: 60px;
   transition: border-color 0.3s;
   width: 60px;
@@ -112,7 +114,7 @@ h2 {
 
 #hue::-ms-thumb {
   border-radius: 33px;
-  border: 3px solid hsla(0, 0%, 100%, .5);
+  border: 3px solid hsla(0, 0%, 100%, 0.5);
   height: 60px;
   transition: border-color 0.3s;
   width: 60px;
@@ -122,7 +124,7 @@ h2 {
   background: transparent;
   border-radius: 33px;
   border: 0 solid transparent;
-  border: 3px solid hsla(0, 0%, 100%, .5);
+  border: 3px solid hsla(0, 0%, 100%, 0.5);
   height: 60px;
   margin: 0;
   outline: none;
@@ -132,7 +134,7 @@ h2 {
 #s-v-thumb {
   background: transparent;
   border-radius: 33px;
-  border: 3px solid hsla(0, 0%, 100%, .5);
+  border: 3px solid hsla(0, 0%, 100%, 0.5);
   height: 60px;
   transition: border-color 0.3s;
   width: 60px;
@@ -169,8 +171,6 @@ h2 {
   background-color: transparent;
 }
 
-
-
 #sample-container {
   left: 390px;
   position: absolute;
@@ -200,40 +200,33 @@ pre {
 }
 
 #sample-container::before {
-  background-image: linear-gradient(135deg, hsl(0, 0%, 90%) 0,
-                                            hsl(0, 0%, 90%) 50px,
-                                            transparent 50px),
-                    linear-gradient(45deg, hsl(0, 0%, 90%) 0,
-                                           hsl(0, 0%, 90%) 50px,
-                                           transparent 50px),
-                    linear-gradient(hsl(0, 0%, 90%), hsl(0, 0%, 90%));
-  background-position: 100px 100px, 100px 0, 0 75px;
+  background-image: url(arrow.svg);
+  background-position: 0 0;
   background-repeat: no-repeat;
-  background-size: 100px 100px, 100px 100px, 100px 50px;
   content: "";
-  height: 200px;
-  left: -600px;
+  height: 70px;
+  left: -550px;
   position: absolute;
   transition: opacity 0.3s, top 0.3s;
-  width: 200px;
+  width: 100px;
 }
 
 h1 + #s-v-container + #hue + #sample-container::before,
 h1 + #s-v-container + #hue + #sample-container::before {
   opacity: 0.1;
-  top: -173px;
+  top: -108px;
 }
 
 #s-v-container:active + #hue + #sample-container::before,
 #s-v-container:focus + #hue + #sample-container::before {
   opacity: 0.5;
-  top: 23px;
+  top: 87px;
 }
 
 #s-v-container + #hue:active + #sample-container::before,
 #s-v-container + #hue:focus + #sample-container::before {
   opacity: 0.5;
-  top: 244px;
+  top: 308px;
 }
 
 #repo-link {

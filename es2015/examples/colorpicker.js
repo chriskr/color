@@ -1,25 +1,25 @@
-'use strict';
+"use strict";
 
 var setupColorPicker = function setupColorPicker() {
   var DELTA = 0.01;
-  var color = new Color('#521a96');
+  var color = new Color("#521a96");
   var rgb = color.rgb;
   var hsl = color.hsl;
   var hsv = color.hsv;
   var hex = color.hex;
-  var hueInput = document.querySelector('#hue');
-  var satValueContainer = document.querySelector('#s-v-container');
-  var sampleText = document.querySelector('pre');
-  var satValueStyle = document.querySelector('#s-v').style;
+  var hueInput = document.querySelector("#hue");
+  var satValueContainer = document.querySelector("#s-v-container");
+  var sampleText = document.querySelector("pre");
+  var satValueStyle = document.querySelector("#s-v").style;
   var sheets = document.styleSheets;
-  var hueThumbStyle = sheets.getDeclaration('#hue::-webkit-slider-thumb', '#hue::-moz-range-thumb', '#hue::-ms-thumb');
-  var satValueThumbStyle = document.querySelector('#s-v-thumb').style;
-  var sampleColorStyle = document.querySelector('#color-sample').style;
+  var hueThumbStyle = sheets.getDeclaration("#hue::-moz-range-thumb", "#hue::-webkit-slider-thumb", "#hue::-ms-thumb");
+  var satValueThumbStyle = document.querySelector("#s-v-thumb").style;
+  var sampleColorStyle = document.querySelector("#color-sample").style;
   var box = null;
 
   var updateHue = function updateHue() {
-    var color = 'hsl(' + hsv.h + ', 100%, 50%)';
-    var backgroundImage = 'linear-gradient(90deg, white, ' + color + ')';
+    var color = "hsl(" + hsv.h + ", 100%, 50%)";
+    var backgroundImage = "linear-gradient(90deg, white, " + color + ")";
     satValueStyle.backgroundImage = backgroundImage;
     updateThumbs();
   };
@@ -32,7 +32,7 @@ var setupColorPicker = function setupColorPicker() {
 
   var updateThumbs = function updateThumbs() {
     if (hueThumbStyle) {
-      hueThumbStyle.backgroundColor = 'hsl(' + hsl.h + ', 100%, 50%)';
+      hueThumbStyle.backgroundColor = "hsl(" + hsl.h + ", 100%, 50%)";
     }
     satValueThumbStyle.backgroundColor = hex.toCss();
     updateSampleColor();
@@ -40,7 +40,7 @@ var setupColorPicker = function setupColorPicker() {
 
   var updateSampleColor = function updateSampleColor() {
     sampleColorStyle.backgroundColor = hex.toCss();
-    sampleText.textContent = ['Hue: ' + hsv.h, 'Satuartion: ' + Color.toPercent(hsv.s), 'Value: ' + Color.toPercent(hsv.v), '', 'CSS values:', hex.toCss(), rgb.toCss(), hsl.toCss()].join('\n');
+    sampleText.textContent = ["Hue: " + hsv.h, "Satuartion: " + Color.toPercent(hsv.s), "Value: " + Color.toPercent(hsv.v), "", "CSS values:", hex.toCss(), rgb.toCss(), hsl.toCss()].join("\n");
   };
 
   var moveInput = function moveInput(event) {
@@ -54,31 +54,31 @@ var setupColorPicker = function setupColorPicker() {
   };
 
   var endInput = function endInput(event) {
-    document.removeEventListener('touchmove', moveInput);
-    document.removeEventListener('touchend', endInput);
-    document.removeEventListener('mousemove', moveInput);
-    document.removeEventListener('mouseup', endInput);
+    document.removeEventListener("touchmove", moveInput);
+    document.removeEventListener("touchend", endInput);
+    document.removeEventListener("mousemove", moveInput);
+    document.removeEventListener("mouseup", endInput);
   };
 
-  hueInput.addEventListener('input', function () {
+  hueInput.addEventListener("input", function () {
     hsv.h = this.value;
     updateHue();
   });
 
-  hueInput.addEventListener('change', function () {
+  hueInput.addEventListener("change", function () {
     hsv.h = this.value;
     updateHue();
   });
 
   var inputStart = function inputStart(event) {
-    var moveType = 'mousemove';
-    var endType = 'mouseup';
-    if (event.type === 'touchstart') {
+    var moveType = "mousemove";
+    var endType = "mouseup";
+    if (event.type === "touchstart") {
       if (event.touches.length > 1) {
         return;
       }
-      moveType = 'touchmove';
-      endType = 'touchend';
+      moveType = "touchmove";
+      endType = "touchend";
     }
     box = satValueContainer.getBoundingClientRect();
     moveInput(event);
@@ -88,26 +88,26 @@ var setupColorPicker = function setupColorPicker() {
     satValueContainer.focus();
   };
 
-  satValueContainer.addEventListener('mousedown', inputStart);
-  satValueContainer.addEventListener('touchstart', inputStart);
+  satValueContainer.addEventListener("mousedown", inputStart);
+  satValueContainer.addEventListener("touchstart", inputStart);
 
-  document.addEventListener('keydown', function (event) {
+  document.addEventListener("keydown", function (event) {
     if (document.activeElement === satValueContainer) {
       switch (event.key) {
-        case 'ArrowRight':
-        case 'Right':
+        case "ArrowRight":
+        case "Right":
           hsv.s += DELTA;
           break;
-        case 'ArrowLeft':
-        case 'Left':
+        case "ArrowLeft":
+        case "Left":
           hsv.s -= DELTA;
           break;
-        case 'ArrowUp':
-        case 'Up':
+        case "ArrowUp":
+        case "Up":
           hsv.v += DELTA;
           break;
-        case 'ArrowDown':
-        case 'Down':
+        case "ArrowDown":
+        case "Down":
           hsv.v -= DELTA;
           break;
       }
@@ -115,7 +115,7 @@ var setupColorPicker = function setupColorPicker() {
     }
   });
 
-  document.addEventListener('dragstart', function (event) {
+  document.addEventListener("dragstart", function (event) {
     event.preventDefault();
   });
 
@@ -128,8 +128,8 @@ window.onload = function () {
   try {
     setupColorPicker();
   } catch (e) {
-    if (location.pathname.indexOf('es2015') === -1) {
-      location.href = '/color/es2015/examples/color-picker.html';
+    if (location.pathname.indexOf("es2015") === -1) {
+      location.href = "/color/es2015/examples/color-picker.html";
     }
   }
 };
